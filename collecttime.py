@@ -21,13 +21,11 @@ if len(sys.argv) > 1:
     week = int(sys.argv[1])
 
 timefiles = collectFiles(week)
-total_mins = 0
 
-output = ""
-output += "WEEK: %d\n" % week
+output = "WEEK: %d\n" % week
 for tfname in timefiles:
     tfile = open(tfname, "r")
-    total_mins += int(tfile.read())
+    total_mins = int(tfile.read())
     date = datetime.strptime(os.path.basename(tfname), "%W-%Y-%m-%d.dat")
     mins = total_mins % 60
     hours = (total_mins - mins) / 60

@@ -7,7 +7,7 @@ It's intended that you put this in a cron script or some other form of scheduler
 
 ### collecttime.py
 Run this to gather all the time information stored from a given week or the current week.
-The data is copied to clipboard so that you easily can paste it into a spreadsheet.
+The data is copied to clipboard for easy pasting into a spreadsheet for example.
 
 ### Config
 You can only config one thing and that is the dir where the data files are stored under $HOME.

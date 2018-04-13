@@ -21,6 +21,7 @@ if len(sys.argv) > 1:
     week = int(sys.argv[1])
 
 timefiles = collectFiles(week)
+timefiles.sort()
 
 output = "WEEK: %d\n" % week
 for tfname in timefiles:
@@ -29,7 +30,7 @@ for tfname in timefiles:
     date = datetime.strptime(os.path.basename(tfname), "%W-%Y-%m-%d.dat")
     mins = total_mins % 60
     hours = (total_mins - mins) / 60
-    output += "%s:\t%d:%d\n" % (date.strftime("%A (%d %b)"), hours, mins)
+    output += "%s:\t%d:%02d\n" % (date.strftime("%A (%d %b)"), hours, mins)
     tfile.close()
 
 pyperclip.copy(output)

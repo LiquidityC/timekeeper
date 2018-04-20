@@ -29,6 +29,9 @@ for tfname in timefiles:
     total_mins = int(tfile.read())
     date = datetime.strptime(os.path.basename(tfname), "%W-%Y-%m-%d.dat")
     mins = total_mins % 60
+    if mins == 15 or mins == 45:
+        total_mins += 15
+        mins = total_mins % 60
     hours = (total_mins - mins) / 60
     output += "%s:\t%d:%02d\n" % (date.strftime("%A (%d %b)"), hours, mins)
     tfile.close()

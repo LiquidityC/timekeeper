@@ -6,6 +6,7 @@ import os
 import sys
 import pyperclip
 import tklib
+from getopt import getopt
 
 def collectFiles(week):
     timefiles = []
@@ -17,8 +18,17 @@ def collectFiles(week):
     return timefiles
 
 week = date.today().isocalendar()[1]
-if len(sys.argv) > 1:
-    week = int(sys.argv[1])
+noRound = False
+
+optlist, args = getopt(sys.argv, "w:", ["week=", "no-round"])
+for opt in optlist:
+    flag = opt[0]
+    if flag == "--week":
+        week = int(opt[1])
+    elif flag == "-w":
+        week = int(opt[1])
+    elif flag == "--no-round":
+        noRound = True
 
 timefiles = collectFiles(week)
 timefiles.sort()
@@ -29,7 +39,7 @@ for tfname in timefiles:
     total_mins = int(tfile.read())
     date = datetime.strptime(os.path.basename(tfname), "%W-%Y-%m-%d.dat")
     mins = total_mins % 60
-    if mins == 15 or mins == 45:
+    if not noRound and (mins == 15 or mins == 45):
         total_mins += 15
         mins = total_mins % 60
     hours = (total_mins - mins) / 60

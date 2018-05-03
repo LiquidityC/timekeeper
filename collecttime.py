@@ -2,11 +2,11 @@
 
 from datetime import date
 from datetime import datetime
+from getopt import getopt
 import os
 import sys
 import pyperclip
 import tklib
-from getopt import getopt
 
 def collectFiles(week):
     timefiles = []
@@ -38,12 +38,10 @@ for tfname in timefiles:
     tfile = open(tfname, "r")
     total_mins = int(tfile.read())
     date = datetime.strptime(os.path.basename(tfname), "%W-%Y-%m-%d.dat")
-    mins = total_mins % 60
-    if not noRound and (mins == 15 or mins == 45):
+    if not noRound and str(total_mins).endswith("5"):
         total_mins += 15
-        mins = total_mins % 60
-    hours = (total_mins - mins) / 60
-    output += "%s:\t%d:%02d\n" % (date.strftime("%A (%d %b)"), hours, mins)
+    hours = float(total_mins / 60)
+    output += "%s:\t%.1f\n" % (date.strftime("%A (%d %b)"), hours)
     tfile.close()
 
 pyperclip.copy(output)

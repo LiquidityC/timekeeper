@@ -5,7 +5,6 @@ from datetime import datetime
 import calendar
 import os
 import sys
-import pyperclip
 import tklib
 
 def collectFiles(year, month):
@@ -32,8 +31,9 @@ for month in range(1,12):
 
     if total == 0:
         continue
-    else:
-        total += 60
 
-    total_hours = (total - (total%60)) / 60
-    print("%d/%02d (%s)\t: %d hours" % (year, month, calendar.month_name[month], total_hours))
+    if str(total).endswith("5"):
+        total += 15
+
+    total_hours = float(total / 60)
+    print("%d/%02d (%s)\t: %.1f hours" % (year, month, calendar.month_name[month], total_hours))

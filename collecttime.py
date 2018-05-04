@@ -2,7 +2,7 @@
 
 from datetime import date
 from datetime import datetime
-from getopt import getopt
+from getopt import gnu_getopt as getopt
 import os
 import sys
 import pyperclip
@@ -17,10 +17,14 @@ def collectFiles(week):
             timefiles.append(os.path.join(root, name))
     return timefiles
 
+##
+## START OF PROG
+##
+
 week = date.today().isocalendar()[1]
 noRound = False
 
-optlist, args = getopt(sys.argv, "w:", ["week=", "no-round"])
+optlist, args = getopt(sys.argv[1:], "w:", ["week=", "no-round"])
 for opt in optlist:
     flag = opt[0]
     if flag == "--week":

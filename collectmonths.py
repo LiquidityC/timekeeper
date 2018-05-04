@@ -2,6 +2,7 @@
 
 from datetime import date
 from datetime import datetime
+from getopt import gnu_getopt as getopt
 import calendar
 import os
 import sys
@@ -17,9 +18,14 @@ def collectFiles(year, month):
             timefiles.append(os.path.join(root, name))
     return timefiles
 
+
 year = date.today().year
-if len(sys.argv) > 1:
-    year = int(sys.argv[1])
+optlist, args = getopt(sys.argv[1:], "y:", ["year="])
+for opt in optlist:
+    flag = opt[0]
+    value = opt[1]
+    if flag == "-y" or flag == "--year":
+        year = int(value)
 
 for month in range(1,12):
     total = 0

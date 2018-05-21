@@ -2,8 +2,13 @@
 
 from pathlib import Path
 from datetime import date
+import sys
 import os
 import tklib
+
+modifier = 15
+if len(sys.argv) > 1:
+    modifier = int(sys.argv[1])
 
 ## Here is where we run
 tklib.ensureDir()
@@ -14,6 +19,6 @@ if os.path.exists(tklib.getTimefileName()):
     tfile.close()
 
 tfile = open(tklib.getTimefileName(), "w")
-value += 15
+value += modifier
 tfile.write(str(value))
 tfile.close()

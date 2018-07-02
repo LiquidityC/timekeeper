@@ -32,14 +32,14 @@ for month in range(1,12):
     timefiles = collectFiles(year, month)
     for tfname in timefiles:
         tfile = open(tfname, "r")
-        total += int(tfile.read())
+        time = tfile.read()
+        if (time.endswith("5")):
+            total += 15
+        total += int(time)
         tfile.close()
 
     if total == 0:
         continue
-
-    if str(total).endswith("5"):
-        total += 15
 
     total_hours = float(total / 60)
     print("%d/%02d (%s)\t: %.1f hours" % (year, month, calendar.month_name[month], total_hours))

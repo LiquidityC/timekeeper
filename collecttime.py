@@ -21,7 +21,11 @@ def collectFiles(week):
 ## START OF PROG
 ##
 
-week = date.today().isocalendar()[1]
+if (len(sys.argv) > 1):
+    week = int(sys.argv[1])
+else:
+    week = date.today().isocalendar()[1]
+
 noRound = False
 
 optlist, args = getopt(sys.argv[1:], "w:", ["week=", "no-round"])

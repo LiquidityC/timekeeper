@@ -2,6 +2,7 @@
 
 from datetime import date
 from datetime import datetime
+from datetime import timedelta
 from getopt import gnu_getopt as getopt
 import os
 import sys
@@ -9,12 +10,14 @@ import pyperclip
 import tklib
 
 def collectFiles(week):
+    year = date.today().year
+    cursorDate = datetime.strptime("%d-%d-1" % (year, week), "%Y-%W-%w")
     timefiles = []
-    for root, dirs, files in os.walk(tklib.getDataDir()):
-        for name in files:
-            if not name.startswith(str(week) + "-"):
-                continue;
-            timefiles.append(os.path.join(root, name))
+    for i in range(0, 5):
+        weekday = cursorDate + timedelta(days=i)
+        fname = weekday.strftime("%W-%Y-%m-%d.dat")
+        timefiles.append(os.path.join(tklib.getDataDir(), fname))
+
     return timefiles
 
 ##
@@ -43,11 +46,20 @@ timefiles.sort()
 
 output = "WEEK: %d\n" % week
 for tfname in timefiles:
+    date = datetime.strptime(os.path.basename(tfname), "%W-%Y-%m-%d.dat")
+
+    # Didn't work this day I guess...
+    if not os.path.exists(tfname):
+        output += "%s:\t0\n" % date.strftime("%A (%d %b)")
+        continue
+
     tfile = open(tfname, "r")
     total_mins = int(tfile.read())
-    date = datetime.strptime(os.path.basename(tfname), "%W-%Y-%m-%d.dat")
+
+    # Round up the time
     if not noRound and str(total_mins).endswith("5"):
         total_mins += 15
+
     hours = float(total_mins / 60)
     output += "%s:\t%.1f\n" % (date.strftime("%A (%d %b)"), hours)
     tfile.close()

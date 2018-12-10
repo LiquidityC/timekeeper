@@ -27,7 +27,7 @@ for opt in optlist:
     if flag == "-y" or flag == "--year":
         year = int(value)
 
-for month in range(1,12):
+for month in range(1,13):
     total = 0
     timefiles = collectFiles(year, month)
     for tfname in timefiles:

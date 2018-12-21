@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 from pathlib import Path
-from datetime import date
+from datetime import date, timedelta
 import os
 
 TIMEKEEPER_DIR = ".timekeeper"
@@ -13,9 +13,9 @@ def ensureDir():
     if not os.path.exists(getDataDir()):
         os.mkdir(getDataDir());
 
-def getDateString():
-    d = date.today()
+def getDateString(dayOffset):
+    d = date.today() + timedelta(days=dayOffset)
     return d.strftime("%W-%Y-%m-%d")
 
-def getTimefileName():
-    return getDataDir() + "/" + getDateString() + ".dat"
+def getTimefileName(dayOffset):
+    return getDataDir() + "/" + getDateString(dayOffset) + ".dat"

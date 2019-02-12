@@ -11,7 +11,7 @@ import tklib
 
 def collectFiles(week):
     year = date.today().year
-    cursorDate = datetime.strptime("%d-%d-1" % (year, week), "%Y-%W-%w")
+    cursorDate = datetime.strptime("%d-%d-1" % (year, week-1), "%Y-%W-%w")
     timefiles = []
     for i in range(0, 5):
         weekday = cursorDate + timedelta(days=i)

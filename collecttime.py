@@ -13,7 +13,7 @@ def collectFiles(week):
     year = date.today().year
     cursorDate = datetime.strptime("%d-%d-1" % (year, week-1), "%Y-%W-%w")
     timefiles = []
-    for i in range(0, 5):
+    for i in range(0, 7):
         weekday = cursorDate + timedelta(days=i)
         fname = weekday.strftime("%W-%Y-%m-%d.dat")
         timefiles.append(os.path.join(tklib.getDataDir(), fname))
